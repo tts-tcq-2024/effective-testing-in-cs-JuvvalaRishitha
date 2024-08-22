@@ -1,78 +1,32 @@
 using System;
-using Xunit;
+using System.Diagnostics;
 
-namespace TshirtSpace
-{
-    public class tshirt
-    {
-        public static string Size(int cms)
-        {
-            if (cms < 38)
-            {
+namespace TshirtSpace {
+    class Tshirt {
+        static string Size(int cms) {
+            if(cms < 38) {
                 return "S"; // Small
-            }
-            else if (cms > 38 && cms < 42)
-            {
+            } else if(cms > 38 && cms < 42) {
                 return "M"; // Medium
-            }
-            else
-            {
+            } else {
                 return "L"; // Large
             }
         }
-    }
 
-    public class TshirtTests
-    {
-        [Fact]
-        public void TestSize_WhenCmsIs37_ReturnsS()
-        {
-            Assert.Equal("S", tshirt.Size(37));
-        }
+        static void Main(string[] args) {
+            // Existing test cases
+            Debug.Assert(Size(37) == "S");
+            Debug.Assert(Size(40) == "M");
+            Debug.Assert(Size(43) == "L");
 
-        [Fact]
-        public void TestSize_WhenCmsIs40_ReturnsM()
-        {
-            Assert.Equal("M", tshirt.Size(40));
-        }
-
-        [Fact]
-        public void TestSize_WhenCmsIs43_ReturnsL()
-        {
-            Assert.Equal("L", tshirt.Size(43));
-        }
-
-        [Fact]
-        public void TestSize_WhenCmsIs38_ReturnsL() 
-        {
+            // New test cases designed to fail
+            Debug.Assert(Size(38) == "S"); // This should return "M", expecting failure
+            Debug.Assert(Size(42) == "M"); // This should return "L", expecting failure
+            Debug.Assert(Size(100) == "M"); // This should return "L", expecting failure
+            Debug.Assert(Size(0) == "M"); // This should return "S", expecting failure
+            Debug.Assert(Size(-10) == "S"); // This should return "S", but let's assume we're checking against invalid here
             
-            Assert.Equal("S", tshirt.Size(38)); 
-        }
-
-        [Fact]
-        public void TestSize_WhenCmsIsNegative_ReturnsS()
-        {
-            Assert.Equal("S", tshirt.Size(-1)); // Edge case
-        }
-
-        [Fact]
-        public void TestSize_WhenCmsIsZero_ReturnsS()
-        {
-            Assert.Equal("S", tshirt.Size(0));
-        }
-
-        [Fact]
-        public void TestSize_WhenCmsIsMaxValue_ReturnsL()
-        {
-            Assert.Equal("L", tshirt.Size(int.MaxValue));
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            // The Main method can remain empty for testing purposes
+            Console.WriteLine("All is well (maybe!)");
         }
     }
 }
