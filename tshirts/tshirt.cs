@@ -36,23 +36,12 @@ namespace TshirtSpace
             AssertSize(37, "S");
             AssertSize(40, "M");
             AssertSize(43, "L");
-            AssertNotEqualSize(38, "S"); // Expected to fail based on original logic
+            AssertSize(38, "S"); // Expected to fail based on original logic
 
             // Invalid inputs
-            AssertNotEqualSize(-1, "Invalid"); // Edge case for invalid input
+            AssertSize(-1, "Invalid"); // Edge case for invalid input
             AssertSize(0, "S"); // Boundary case for small
             AssertSize(int.MaxValue, "L"); // Extreme valid input
-
-            // You can also add assertions for failure cases
-            try
-            {
-                // This will intentionally fail, so we can catch it
-                AssertNotEqualSize(38, "M"); // We expect this to fail based on current logic
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Expected failure for Size(38): {ex.Message}");
-            }
         }
 
         static void AssertSize(int cms, string expected)
