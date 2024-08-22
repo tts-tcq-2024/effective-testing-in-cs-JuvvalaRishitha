@@ -14,7 +14,7 @@ jobs:
           dotnet-version: 8.0.x
       - run: |
           cd tshirts
-          bash ../.github/workflows/expectfail.sh dotnet restore dotnet test
+          bash ../.github/workflows/expectfail.sh dotnet restore dotnet run
       - run: |
           cd misaligned
           bash ../.github/workflows/expectfail.sh dotnet restore dotnet run
