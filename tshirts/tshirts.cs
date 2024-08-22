@@ -26,19 +26,23 @@ namespace TshirtSpace
         {
             int failedTests = 0;
 
-            // Test cases
+            // Valid inputs
             failedTests += AssertEqual(Size(37), "S");
             failedTests += AssertEqual(Size(40), "M");
             failedTests += AssertEqual(Size(43), "L");
             failedTests += AssertEqual(Size(38), "S"); // This is expected to fail based on original logic
-            failedTests += AssertEqual(Size(-1), "Invalid"); // Not handled in the original logic
+
+            // Invalid inputs
+            failedTests += AssertEqual(Size(-1), "S"); // This case is not handled in the original logic
             failedTests += AssertEqual(Size(0), "S"); // Boundary case for small
 
             // Handle invalid input; this case will raise an exception in C#
             try
             {
-                int invalidInput = Convert.ToInt32("$$$"); // This will throw an exception
-                failedTests += AssertEqual(Size(invalidInput), "Invalid"); // This line won't execute due to exception
+                // This will throw an exception
+                int invalidInput = Convert.ToInt32("$$$"); 
+                // This line won't execute due to exception
+                failedTests += AssertEqual(Size(invalidInput), "Invalid"); 
             }
             catch (FormatException)
             {
