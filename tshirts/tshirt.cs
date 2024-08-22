@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace TshirtSpace
 {
-    class Tshirt
+    class tshirt
     {
         // Method to determine T-shirt size based on measurements in cms
         static string Size(int cms)
