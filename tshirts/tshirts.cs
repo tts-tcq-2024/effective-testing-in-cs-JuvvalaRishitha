@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace TshirtSpace
 {
@@ -32,35 +33,41 @@ namespace TshirtSpace
         // Method to run various tests
         static void RunTests()
         {
-            int failedTests = 0;
-
             // Valid inputs
-            failedTests += TestSize(37, "S"); // Should pass
-            failedTests += TestSize(40, "M"); // Should pass
-            failedTests += TestSize(43, "L"); // Should pass
+            AssertEqual(Size(37), "S"); // Expected to pass
+            AssertEqual(Size(40), "M"); // Expected to pass
+            AssertEqual(Size(43), "L"); // Expected to pass
 
-            // Test case that is expected to fail based on original logic
-            failedTests += TestSize(38, "M"); // Expected to fail (should return "S")
-            failedTests += TestSize(38, "Invalid"); // Expected to fail (should return "S")
+            // Expected failures based on the original logic
+            AssertNotEqual(Size(38), "M"); // Expected to fail (should return "S")
+            AssertNotEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
 
-            // Invalid and extreme inputs
-            failedTests += TestSize(-1, "Invalid"); // Invalid input
-            failedTests += TestSize(int.MaxValue, "L"); // Extreme valid input, should be Large
-            failedTests += TestSize(0, "S"); // Boundary case, should return Small
+            // Invalid inputs
+            AssertEqual(Size(-1), "Invalid"); // Invalid input
+            AssertEqual(Size(int.MaxValue), "L"); // Extreme valid input, should be Large
+            AssertEqual(Size(0), "S"); // Boundary case, should return Small
 
-            Console.WriteLine($"Total failed tests: {failedTests}");
+            Console.WriteLine("All test assertions completed.");
         }
 
-        // Helper method to test T-shirt size
-        static int TestSize(int cms, string expected)
+        // Helper method to assert equality and throw if not
+        static void AssertEqual(string actual, string expected)
         {
-            string result = Size(cms);
-            if (result != expected)
+            Debug.Assert(actual == expected, $"Assertion failed: expected '{expected}', but got '{actual}'.");
+            if (actual != expected)
             {
-                Console.WriteLine($"Test failed: Expected Size({cms}) to be '{expected}', but got '{result}'.");
-                return 1; // Count this as a failed test
+                throw new Exception($"Assertion failed: expected '{expected}', but got '{actual}'.");
             }
-            return 0; // No failure
+        }
+
+        // Helper method to assert not equal and throw if they are equal
+        static void AssertNotEqual(string actual, string unexpected)
+        {
+            Debug.Assert(actual != unexpected, $"Assertion failed: did not expect '{unexpected}', but got '{actual}'.");
+            if (actual == unexpected)
+            {
+                throw new Exception($"Assertion failed: did not expect '{unexpected}', but got '{actual}'.");
+            }
         }
     }
 }
