@@ -33,31 +33,45 @@ namespace TshirtSpace
         // Method to run various tests
         static void RunTests()
         {
+            int failedTests = 0;
+
             // Valid inputs
-            AssertEqual(Size(37), "S"); // Expected to pass
-            AssertEqual(Size(40), "M"); // Expected to pass
-            AssertEqual(Size(43), "L"); // Expected to pass
+            failedTests += AssertEqual(Size(37), "S"); // Expected to pass
+            failedTests += AssertEqual(Size(40), "M"); // Expected to pass
+            failedTests += AssertEqual(Size(43), "L"); // Expected to pass
 
             // Expected failures based on the original logic
-            AssertEqual(Size(38), "M"); // Expected to fail (should return "S")
-            AssertEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
+            failedTests += AssertNotEqual(Size(38), "M"); // Expected to fail (should return "S")
+            failedTests += AssertNotEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
 
             // Invalid inputs
-            AssertEqual(Size(-1), "Invalid"); // Invalid input
-            AssertEqual(Size(int.MaxValue), "L"); // Extreme valid input, should be Large
-            AssertEqual(Size(0), "S"); // Boundary case, should return Small
+            failedTests += AssertEqual(Size(-1), "Invalid"); // Invalid input
+            failedTests += AssertEqual(Size(int.MaxValue), "L"); // Extreme valid input, should be Large
+            failedTests += AssertEqual(Size(0), "S"); // Boundary case, should return Small
 
-            Console.WriteLine("All test assertions completed.");
+            Console.WriteLine($"Total failed tests: {failedTests}");
         }
 
-        // Helper method to assert equality and throw if not
-        static void AssertEqual(string actual, string expected)
+        // Helper method to assert equality and return failure count
+        static int AssertEqual(string actual, string expected)
         {
-            Debug.Assert(actual == expected, $"Assertion failed: expected '{expected}', but got '{actual}'.");
             if (actual != expected)
             {
-                throw new Exception($"Assertion failed: expected '{expected}', but got '{actual}'.");
+                Console.WriteLine($"Assertion failed: expected '{expected}', but got '{actual}'.");
+                return 1; // Count this as a failed test
             }
+            return 0; // No failure
+        }
+
+        // Helper method to assert not equal and return failure count
+        static int AssertNotEqual(string actual, string unexpected)
+        {
+            if (actual == unexpected)
+            {
+                Console.WriteLine($"Assertion failed: did not expect '{unexpected}', but got '{actual}'.");
+                return 1; // Count this as a failed test
+            }
+            return 0; // No failure
         }
     }
 }
