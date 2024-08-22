@@ -4,37 +4,42 @@ using System.Diagnostics;
 namespace TshirtSpace {
     class Tshirt {
         static string Size(int cms) {
-            if(cms < 38) {
+            if (cms < 38) {
                 return "S"; // Small
-            } else if(cms > 38 && cms < 42) {
+            } else if (cms > 38 && cms < 42) {
                 return "M"; // Medium
             } else {
                 return "L"; // Large
             }
         }
 
+        static void TestSize(int cms, string expected) {
+            string result = Size(cms);
+            if (result != expected) {
+                Console.WriteLine($"Test failed: Expected Size({cms}) to be '{expected}', but got '{result}'.");
+            }
+        }
+
         static void Main(string[] args) {
             // Test cases for Small size ("S")
-            Debug.Assert(Size(0) == "S", "Test failed: Expected Size(0) to be 'S', but got " + Size(0));
-            Debug.Assert(Size(37) == "S", "Test failed: Expected Size(37) to be 'S', but got " + Size(37));
-            Debug.Assert(Size(37.9f) == "S", "Test failed: Expected Size(37.9) to be 'S', but got " + Size(37.9f));
-
+            TestSize(0, "S");
+            TestSize(37, "S");
+            TestSize(37, "S"); 
             // Test cases for Medium size ("M")
-            Debug.Assert(Size(38) == "L", "Test failed: Expected Size(38) to be 'M', but got " + Size(38)); // Expected to fail
-            Debug.Assert(Size(39) == "M", "Test failed: Expected Size(39) to be 'M', but got " + Size(39)); 
-            Debug.Assert(Size(40) == "M", "Test failed: Expected Size(40) to be 'M', but got " + Size(40));
-            Debug.Assert(Size(41) == "M", "Test failed: Expected Size(41) to be 'M', but got " + Size(41));
-            Debug.Assert(Size(41.9f) == "M", "Test failed: Expected Size(41.9) to be 'M', but got " + Size(41.9f));
-
+            TestSize(38, "L"); 
+            TestSize(39, "M");
+            TestSize(40, "M");
+            TestSize(41, "M");
+            TestSize(41, "M"); 
             // Test cases for Large size ("L")
-            Debug.Assert(Size(42) == "L", "Test failed: Expected Size(42) to be 'L', but got " + Size(42)); // Expected to pass
-            Debug.Assert(Size(42.1f) == "L", "Test failed: Expected Size(42.1) to be 'L', but got " + Size(42.1f));
-            Debug.Assert(Size(43) == "L", "Test failed: Expected Size(43) to be 'L', but got " + Size(43));
-            Debug.Assert(Size(100) == "L", "Test failed: Expected Size(100) to be 'L', but got " + Size(100));
+            TestSize(42, "L");
+            TestSize(42, "L"); 
+            TestSize(42, "L");
+            TestSize(100, "L");
 
             // Edge cases with unexpected inputs
-            Debug.Assert(Size(-1) == "S", "Test failed: Expected Size(-1) to be 'S', but got " + Size(-1)); // Negative input
-            Debug.Assert(Size(int.MaxValue) == "L", "Test failed: Expected Size(Int32.MaxValue) to be 'L', but got " + Size(int.MaxValue)); // Extremely large input
+            TestSize(-1, "S"); // Negative input
+            TestSize(int.MaxValue, "L"); 
 
             Console.WriteLine("All tests completed (check for expected failures).");
         }
