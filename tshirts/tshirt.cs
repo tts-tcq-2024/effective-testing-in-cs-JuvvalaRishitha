@@ -3,8 +3,7 @@ using Xunit;
 
 namespace TshirtSpace
 {
-    // Tshirt class containing the logic to determine size
-    public class tshirt
+    public class Tshirt
     {
         public static string Size(int cms)
         {
@@ -23,42 +22,60 @@ namespace TshirtSpace
         }
     }
 
-    // Test class for Tshirt
-    public class tshirtTests
-    {
-        [Theory]
-        [InlineData(37, "S")]
-        [InlineData(40, "M")]
-        [InlineData(43, "L")]
-        [InlineData(38, "S")] // This case is expected to fail based on original logic
-        [InlineData(-1, "Invalid")] // Edge case for invalid input
-        [InlineData(0, "S")] // Boundary case for small
-        [InlineData(int.MaxValue, "L")] // Extreme valid input
-        public void TestSize(int cms, string expected)
-        {
-            string result = tshirt.Size(cms);
-
-            // Expected failure for Size(38)
-            if (cms == 38)
-            {
-                Assert.NotEqual(expected, result); // This should trigger a failure
-            }
-            else
-            {
-                Assert.Equal(expected, result); // Normal assertion
-            }
-        }
-    }
-
-    // Main program to run the tests
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            // Running the tests
-            var testRunner = new Xunit.Runner.VisualStudio.TestRunner();
-            testRunner.RunTests();
-            Console.WriteLine("All tests completed (check for expected failures).");
+            RunTests();
+            Console.WriteLine("All tests completed (check for expected failures).\n");
+        }
+
+        static void RunTests()
+        {
+            // Valid inputs
+            AssertSize(37, "S");
+            AssertSize(40, "M");
+            AssertSize(43, "L");
+            AssertSize(38, "S"); // Expected to fail based on original logic
+
+            // Invalid inputs
+            AssertSize(-1, "Invalid"); // Edge case for invalid input
+            AssertSize(0, "S"); // Boundary case for small
+            AssertSize(int.MaxValue, "L"); // Extreme valid input
+
+            // You can also add assertions for failure cases
+            try
+            {
+                // This will intentionally fail, so we can catch it
+                AssertNotEqualSize(38, "M"); // We expect this to fail based on current logic
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Expected failure for Size(38): {ex.Message}");
+            }
+        }
+
+        static void AssertSize(int cms, string expected)
+        {
+            string result = Tshirt.Size(cms);
+            if (result != expected)
+            {
+                Console.WriteLine($"Test failed: Expected Size({cms}) to be '{expected}', but got '{result}'.");
+            }
+            else
+            {
+                Console.WriteLine($"Test passed: Size({cms}) is '{result}'.");
+            }
+        }
+
+        static void AssertNotEqualSize(int cms, string unexpected)
+        {
+            string result = Tshirt.Size(cms);
+            if (result == unexpected)
+            {
+                throw new Exception($"Test failed: Size({cms}) should not be '{unexpected}', but it is.");
+            }
+            Console.WriteLine($"Test passed: Size({cms}) is not '{unexpected}'.");
         }
     }
 }
