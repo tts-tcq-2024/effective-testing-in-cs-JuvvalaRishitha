@@ -3,26 +3,6 @@ using Xunit;
 
 namespace TshirtSpace
 {
-    public class Tshirt
-    {
-        // Method to determine T-shirt size based on cms
-        public static string Size(int cms)
-        {
-            if (cms < 38)
-            {
-                return "S"; // Small
-            }
-            else if (cms > 38 && cms < 42)
-            {
-                return "M"; // Medium
-            }
-            else
-            {
-                return "L"; // Large
-            }
-        }
-    }
-
     public class TshirtTests
     {
         [Fact]
