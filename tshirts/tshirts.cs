@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace TshirtSpace
 {
@@ -45,9 +44,13 @@ namespace TshirtSpace
             failedTests += AssertNotEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
 
             // Invalid inputs
-            failedTests += AssertEqual(Size(-1), "Invalid"); // Invalid input
-            failedTests += AssertEqual(Size(int.MaxValue), "L"); // Extreme valid input, should be Large
+            failedTests += AssertEqual(Size(-1), "Invalid"); // Invalid input (not handled in the original logic)
+            failedTests += AssertEqual(Size(int.MaxValue), "L"); // Extreme valid input
             failedTests += AssertEqual(Size(0), "S"); // Boundary case, should return Small
+
+            // Extra test cases
+            failedTests += AssertEqual(Size(41), "M"); // Valid middle size
+            failedTests += AssertNotEqual(Size(42), "M"); // Should return "L"
 
             Console.WriteLine($"Total failed tests: {failedTests}");
         }
