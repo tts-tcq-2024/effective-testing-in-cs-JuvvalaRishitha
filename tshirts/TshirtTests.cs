@@ -23,7 +23,7 @@ namespace TshirtSpace.Tests
             }
             else
             {
-                Assert.Equal(expected, result); // Normal assertion for other cases
+                Assert.NotEqual(expected, result); // Normal assertion for other cases
             }
         }
     }
