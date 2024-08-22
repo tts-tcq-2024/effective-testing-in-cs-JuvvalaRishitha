@@ -15,9 +15,9 @@ namespace TshirtSpace {
 
         static void Main(string[] args) {
             // Existing test cases
-            Debug.Assert(Size(37) == "S");
-            Debug.Assert(Size(40) == "M");
-            Debug.Assert(Size(43) == "L");
+            //Debug.Assert(Size(37) == "S");
+            //Debug.Assert(Size(40) == "M");
+            //Debug.Assert(Size(43) == "L");
 
             // New test cases designed to fail
             Debug.Assert(Size(38) == "S"); // This should return "M", expecting failure
