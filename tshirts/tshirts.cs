@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace TshirtSpace {
     class Tshirt {
@@ -13,35 +12,38 @@ namespace TshirtSpace {
             }
         }
 
-        static void TestSize(int cms, string expected) {
+        static void Main(string[] args) {
+            int failedTests = 0;
+
+            // Test cases for Small size ("S")
+            failedTests += TestSize(0, "S");
+            failedTests += TestSize(37, "S");
+
+            // Test cases for Medium size ("M")
+            failedTests += TestSize(38, "L"); // Expected to fail
+            failedTests += TestSize(39, "M");
+            failedTests += TestSize(40, "M");
+            failedTests += TestSize(41, "M");
+
+            // Test cases for Large size ("L")
+            failedTests += TestSize(42, "L");
+            failedTests += TestSize(42.1f, "L"); // This is technically incorrect
+            failedTests += TestSize(100, "L");
+
+            // Edge cases with unexpected inputs
+            failedTests += TestSize(-1, "S"); // Negative input
+            failedTests += TestSize(int.MaxValue, "L"); // Extremely large input
+
+            Console.WriteLine("All tests completed. Total failed tests: " + failedTests);
+        }
+
+        static int TestSize(int cms, string expected) {
             string result = Size(cms);
             if (result != expected) {
                 Console.WriteLine($"Test failed: Expected Size({cms}) to be '{expected}', but got '{result}'.");
+                return 1; // Count this as a failed test
             }
-        }
-
-        static void Main(string[] args) {
-            // Test cases for Small size ("S")
-            TestSize(0, "S");
-            TestSize(37, "S");
-            TestSize(37, "S"); 
-            // Test cases for Medium size ("M")
-            TestSize(38, "L"); 
-            TestSize(39, "M");
-            TestSize(40, "M");
-            TestSize(41, "M");
-            TestSize(41, "M"); 
-            // Test cases for Large size ("L")
-            TestSize(42, "L");
-            TestSize(42, "L"); 
-            TestSize(42, "L");
-            TestSize(100, "L");
-
-            // Edge cases with unexpected inputs
-            TestSize(-1, "S"); // Negative input
-            TestSize(int.MaxValue, "L"); 
-
-            Console.WriteLine("All tests completed (check for expected failures).");
+            return 0; // No failure
         }
     }
 }
