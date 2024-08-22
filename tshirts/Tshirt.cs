@@ -4,7 +4,6 @@ namespace TshirtSpace
 {
     public class Tshirt
     {
-        // Method to determine T-shirt size based on cms
         public static string Size(int cms)
         {
             if (cms < 38)
@@ -21,13 +20,4 @@ namespace TshirtSpace
             }
         }
     }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("All tests will be executed using xUnit. Please run 'dotnet test' to see results.");
-        }
-    }
 }
-
