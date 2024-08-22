@@ -39,8 +39,8 @@ namespace TshirtSpace
             AssertEqual(Size(43), "L"); // Expected to pass
 
             // Expected failures based on the original logic
-            AssertNotEqual(Size(38), "M"); // Expected to fail (should return "S")
-            AssertNotEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
+            AssertEqual(Size(38), "M"); // Expected to fail (should return "S")
+            AssertEqual(Size(38), "Invalid"); // Expected to fail (should return "S")
 
             // Invalid inputs
             AssertEqual(Size(-1), "Invalid"); // Invalid input
@@ -57,16 +57,6 @@ namespace TshirtSpace
             if (actual != expected)
             {
                 throw new Exception($"Assertion failed: expected '{expected}', but got '{actual}'.");
-            }
-        }
-
-        // Helper method to assert not equal and throw if they are equal
-        static void AssertNotEqual(string actual, string unexpected)
-        {
-            Debug.Assert(actual != unexpected, $"Assertion failed: did not expect '{unexpected}', but got '{actual}'.");
-            if (actual == unexpected)
-            {
-                throw new Exception($"Assertion failed: did not expect '{unexpected}', but got '{actual}'.");
             }
         }
     }
