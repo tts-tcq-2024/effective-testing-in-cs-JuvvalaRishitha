@@ -1,11 +1,12 @@
 using System;
+using Xunit;
 
 namespace TshirtSpace
 {
-    class Tshirt
+    public class Tshirt
     {
         // Method to determine T-shirt size based on cms
-        static string Size(int cms)
+        public static string Size(int cms)
         {
             if (cms < 38)
             {
@@ -20,66 +21,40 @@ namespace TshirtSpace
                 return "L"; // Large
             }
         }
+    }
 
-        // Method to run tests
-        static void RunTests()
+    public class TshirtTests
+    {
+        [Fact]
+        public void TestSize_ValidInputs()
         {
-            int failedTests = 0;
-
             // Valid inputs
-            failedTests += AssertEqual(Size(37), "S"); // Expect S
-            failedTests += AssertEqual(Size(40), "M"); // Expect M
-            failedTests += AssertEqual(Size(43), "L"); // Expect L
-
-            // Testing the boundary case that should fail
-            failedTests += AssertNotEqual(Size(38), "M"); // Expecting failure since original logic returns "L"
-
-            // Invalid input tests
-            failedTests += AssertNotEqual(Size(-1), "Invalid"); // Negative input not handled, we expect it to return "S"
-            failedTests += AssertNotEqual(Size(0), "Invalid"); // Expecting "S" based on current logic
-
-            // Non-integer input will throw an exception and is not directly tested
-            try
-            {
-                int invalidInput = Convert.ToInt32("$$$"); // This will throw an exception
-                failedTests += AssertEqual(Size(invalidInput), "Invalid"); // Not executed
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Test passed for invalid input (non-integer).");
-            }
-
-            // Display the total number of failed tests
-            Console.WriteLine($"Total failed tests: {failedTests}");
+            Assert.Equal("S", Tshirt.Size(37));
+            Assert.Equal("M", Tshirt.Size(40));
+            Assert.Equal("L", Tshirt.Size(43));
         }
 
-        // Assertion method to check equality
-        static int AssertEqual(string actual, string expected)
+        [Fact]
+        public void TestSize_BoundaryCases()
         {
-            if (actual != expected)
-            {
-                Console.WriteLine($"Test failed: Expected '{expected}', but got '{actual}'.");
-                return 1; // Count this as a failed test
-            }
-            return 0; // No failure
+            // Test the edge case that is expected to fail
+            Assert.NotEqual("M", Tshirt.Size(38)); // Expected failure based on original logic
         }
 
-        // Assertion method to check inequality (for expected failures)
-        static int AssertNotEqual(string actual, string unexpected)
+        [Fact]
+        public void TestSize_InvalidInputs()
         {
-            if (actual == unexpected)
-            {
-                Console.WriteLine($"Test failed (expected failure): Expected not to be '{unexpected}', but got '{actual}'.");
-                return 1; // Count this as a failed test
-            }
-            return 0; // No failure
+            // Testing invalid inputs
+            Assert.Equal("S", Tshirt.Size(-1)); // Negative input handled as "S"
+            Assert.Equal("S", Tshirt.Size(0));  // Edge case for small
+            Assert.Equal("L", Tshirt.Size(int.MaxValue)); // Extreme valid input
         }
 
-        // Main entry point
-        static void Main(string[] args)
+        [Fact]
+        public void TestSize_NonIntegerInput()
         {
-            RunTests();
-            Console.WriteLine("All tests completed (check for expected failures).\n");
+            // This test simulates the behavior of non-integer input; as we can't pass this directly to the Size method
+            Assert.Throws<FormatException>(() => Convert.ToInt32("$$$"));
         }
     }
 }
