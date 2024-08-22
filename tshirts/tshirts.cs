@@ -4,6 +4,7 @@ namespace TshirtSpace
 {
     class Tshirt
     {
+        // Method to determine T-shirt size based on cms
         static string Size(int cms)
         {
             if (cms < 38)
@@ -20,35 +21,37 @@ namespace TshirtSpace
             }
         }
 
+        // Main entry point
         static void Main(string[] args)
         {
-            // Test cases
+            // Run test cases
             RunTests();
             Console.WriteLine("All tests completed (check for expected failures).\n");
         }
 
+        // Method to run various tests
         static void RunTests()
         {
             int failedTests = 0;
 
             // Valid inputs
-            failedTests += TestSize(37, "S");
-            failedTests += TestSize(40, "M");
-            failedTests += TestSize(43, "L");
-            failedTests += TestSize(38, "S"); // Expected to fail based on original logic
+            failedTests += TestSize(37, "S"); // Should pass
+            failedTests += TestSize(40, "M"); // Should pass
+            failedTests += TestSize(43, "L"); // Should pass
 
-            // Invalid inputs
-            failedTests += TestSize(-1, "Invalid"); // We expect this to be handled, but it won't based on current logic
-            failedTests += TestSize(int.MaxValue, "L"); // Extreme valid input
-            failedTests += TestSize(0, "S"); // Boundary case for small
-            failedTests += TestSize(38, "Invalid"); // Testing the edge case for input exactly 38
+            // Test case that is expected to fail based on original logic
+            failedTests += TestSize(38, "M"); // Expected to fail (should return "S")
+            failedTests += TestSize(38, "Invalid"); // Expected to fail (should return "S")
 
-            // Non-integer input (not handled in current logic, so this will not be a test case here)
-            // We will only test valid integer cases here
+            // Invalid and extreme inputs
+            failedTests += TestSize(-1, "Invalid"); // Invalid input
+            failedTests += TestSize(int.MaxValue, "L"); // Extreme valid input, should be Large
+            failedTests += TestSize(0, "S"); // Boundary case, should return Small
 
             Console.WriteLine($"Total failed tests: {failedTests}");
         }
 
+        // Helper method to test T-shirt size
         static int TestSize(int cms, string expected)
         {
             string result = Size(cms);
