@@ -20,7 +20,7 @@ namespace TshirtSpace {
             Debug.Assert(Size(37.9f) == "S", "Test failed: Expected Size(37.9) to be 'S', but got " + Size(37.9f));
 
             // Test cases for Medium size ("M")
-            Debug.Assert(Size(38) == "M", "Test failed: Expected Size(38) to be 'M', but got " + Size(38));
+            Debug.Assert(Size(38) == "M", "Test failed: Expected Size(38) to be 'M', but got " + Size(38));  // Expected to fail due to original logic
             Debug.Assert(Size(40) == "M", "Test failed: Expected Size(40) to be 'M', but got " + Size(40));
             Debug.Assert(Size(41) == "M", "Test failed: Expected Size(41) to be 'M', but got " + Size(41));
             Debug.Assert(Size(41.9f) == "M", "Test failed: Expected Size(41.9) to be 'M', but got " + Size(41.9f));
