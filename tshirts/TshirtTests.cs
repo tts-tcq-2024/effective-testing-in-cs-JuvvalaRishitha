@@ -16,10 +16,10 @@ namespace TshirtSpace.Tests
         {
             string result = Tshirt.Size(cms);
             
-            // Use Assert.NotEqual for the expected failure case
+           
             if (cms == 38)
             {
-                Assert.NotEqual(expected, result); // Expected failure
+                Assert.Equal(expected, result); // Expected failure
             }
             else
             {
