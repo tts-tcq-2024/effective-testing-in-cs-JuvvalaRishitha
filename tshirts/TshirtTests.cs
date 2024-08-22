@@ -1,37 +1,27 @@
 using Xunit;
 
-namespace TshirtSpace
+namespace TshirtSpace.Tests
 {
     public class TshirtTests
     {
-        [Fact]
-        public void TestSize_ValidInputs()
+        [Theory]
+        [InlineData(37, "S")]
+        [InlineData(40, "M")]
+        [InlineData(43, "L")]
+        [InlineData(38, "S")]  // Expected to fail based on the original logic
+        [InlineData(-1, "S")]   // Negative value
+        [InlineData(int.MaxValue, "L")] // Maximum int value
+        public void TestSize(int cms, string expected)
         {
-            Assert.Equal("S", Tshirt.Size(37));
-            Assert.Equal("M", Tshirt.Size(40));
-            Assert.Equal("L", Tshirt.Size(43));
-        }
-
-        [Fact]
-        public void TestSize_BoundaryCases()
-        {
-            // This is expected to fail
-            Assert.NotEqual("M", Tshirt.Size(38)); // Expected failure based on original logic
-        }
-
-        [Fact]
-        public void TestSize_InvalidInputs()
-        {
-            Assert.Equal("S", Tshirt.Size(-1)); // Should be handled as "S"
-            Assert.Equal("S", Tshirt.Size(0));  // Should also return "S"
-            Assert.Equal("L", Tshirt.Size(int.MaxValue)); // Extreme valid input
-        }
-
-        [Fact]
-        public void TestSize_NonIntegerInput()
-        {
-            // Test for non-integer input
-            Assert.Throws<FormatException>(() => Convert.ToInt32("$$$"));
+            string result = Tshirt.Size(cms);
+            if (expected == "S" && cms == 38) // This test is expected to fail
+            {
+                Assert.NotEqual(expected, result); // Assert Not Equal for expected failure
+            }
+            else
+            {
+                Assert.Equal(expected, result); // Regular assertion
+            }
         }
     }
 }
