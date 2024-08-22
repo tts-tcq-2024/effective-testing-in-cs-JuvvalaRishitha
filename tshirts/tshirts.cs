@@ -30,31 +30,29 @@ namespace TshirtSpace
             failedTests += AssertEqual(Size(37), "S"); // Expect S
             failedTests += AssertEqual(Size(40), "M"); // Expect M
             failedTests += AssertEqual(Size(43), "L"); // Expect L
+            
+            // Boundary case expected to fail
+            failedTests += AssertEqual(Size(38), "S"); // Expected to fail
 
-            // Test for boundary cases
-            failedTests += AssertEqual(Size(38), "L"); // This is expected to fail based on the original logic.
+            // Invalid input tests (current logic does not handle these properly)
+            failedTests += AssertEqual(Size(-1), "S"); // Negative input (undefined behavior)
+            failedTests += AssertEqual(Size(0), "S"); // Zero cms (undefined behavior)
 
-            // Invalid input tests - these are expected to fail based on current logic.
-            failedTests += AssertEqual(Size(-1), "S"); // Negative input, expected behavior is undefined
-            failedTests += AssertEqual(Size(0), "S"); // Zero cms, expected behavior is undefined
-
-            // Exception for invalid input
+            // Exception handling for non-integer input
             try
             {
-                int invalidInput = Convert.ToInt32("$$$"); // This will throw an exception.
-                // This line won't execute because of the exception above.
-                failedTests += AssertEqual(Size(invalidInput), "Invalid");
+                int invalidInput = Convert.ToInt32("$$$"); // This will throw an exception
+                failedTests += AssertEqual(Size(invalidInput), "Invalid"); // Not executed
             }
             catch (FormatException)
             {
                 Console.WriteLine("Test passed for invalid input (non-integer).");
             }
 
-            // Final output for test results
             Console.WriteLine($"Total failed tests: {failedTests}");
         }
 
-        // Assertion method to check equality
+        // Assertion method to check expected vs actual values
         static int AssertEqual(string actual, string expected)
         {
             if (actual != expected)
