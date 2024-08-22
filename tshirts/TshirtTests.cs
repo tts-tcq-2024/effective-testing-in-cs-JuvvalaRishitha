@@ -9,19 +9,21 @@ namespace TshirtSpace.Tests
         [InlineData(40, "M")]
         [InlineData(43, "L")]
         [InlineData(38, "S")] // This will be the failing test case
-        [InlineData(-1, "S")] // Negative case; adjust the expected output based on your design
-        [InlineData(int.MaxValue, "L")] // Extreme valid input
+        [InlineData(-1, "S")] // Assuming this is handled by the system, adjust if necessary
+        [InlineData(0, "S")]  // Boundary test case
+        [InlineData(int.MaxValue, "L")] // Testing with extreme valid input
         public void TestSize(int cms, string expected)
         {
             string result = Tshirt.Size(cms);
             
-            if (expected == "S" && cms == 38) // Expected failure case
+            // Use Assert.NotEqual for the expected failure case
+            if (cms == 38)
             {
-                Assert.NotEqual(expected, result); // Assert Not Equal for expected failure
+                Assert.NotEqual(expected, result); // Expected failure
             }
             else
             {
-                Assert.Equal(expected, result); // Regular assertion
+                Assert.Equal(expected, result); // Normal assertion for other cases
             }
         }
     }
