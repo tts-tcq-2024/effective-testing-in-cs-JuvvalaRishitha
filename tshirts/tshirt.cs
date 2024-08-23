@@ -15,9 +15,9 @@ namespace TshirtSpace {
 
         static void Main(string[] args) {
             // Original test cases (these should pass)
-            //Debug.Assert(Size(37) == "S");
-            //Debug.Assert(Size(40) == "M");
-            //Debug.Assert(Size(43) == "L");
+            Debug.Assert(Size(37) == "S");
+            Debug.Assert(Size(40) == "M");
+            Debug.Assert(Size(43) == "L");
 
             // New test cases designed to fail
             Debug.Assert(Size(38) == "M"); // This should fail, as the original code does not handle cms == 38 correctly
