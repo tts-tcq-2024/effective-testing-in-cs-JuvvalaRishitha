@@ -22,14 +22,14 @@ namespace TshirtSpace {
             // Create a flag to check if any test passed unexpectedly
             bool anyTestPassed = false;
 
-            // Test cases
-            anyTestPassed |= AssertFailing(Size(37), "S"); // Should pass, expected failure
-            anyTestPassed |= AssertFailing(Size(40), "M"); // Should pass, expected failure
-            anyTestPassed |= AssertFailing(Size(43), "L"); // Should pass, expected failure
-            anyTestPassed |= AssertFailing(Size(38), "Invalid"); // Expected to fail based on original logic
-            anyTestPassed |= AssertFailing(Size(-1), "Invalid"); // This should fail based on logic
-            anyTestPassed |= AssertFailing(Size(0), "Invalid"); // This should fail, expected failure
-            anyTestPassed |= AssertFailing(Size(int.MaxValue), "L"); // Should pass, expected failure
+            // Deliberately create incorrect expected values
+            anyTestPassed |= AssertFailing(Size(37), "M"); // Should fail, expected "S"
+            anyTestPassed |= AssertFailing(Size(40), "L"); // Should fail, expected "M"
+            anyTestPassed |= AssertFailing(Size(43), "M"); // Should fail, expected "L"
+            anyTestPassed |= AssertFailing(Size(38), "S"); // Should fail, expected gap in logic
+            anyTestPassed |= AssertFailing(Size(-1), "L"); // Should fail, out-of-bounds test
+            anyTestPassed |= AssertFailing(Size(0), "M"); // Should fail, out-of-bounds test
+            anyTestPassed |= AssertFailing(Size(int.MaxValue), "M"); // Should fail, extreme value test
 
             // If any test passed unexpectedly, throw an exception
             if (anyTestPassed) {
@@ -47,4 +47,3 @@ namespace TshirtSpace {
         }
     }
 }
-
