@@ -28,8 +28,8 @@ namespace TshirtSpace {
             anyTestPassed |= AssertFailing(Size(43), "L"); // Should pass, expected failure
             anyTestPassed |= AssertFailing(Size(38), "Invalid"); // Expected to fail based on original logic
             anyTestPassed |= AssertFailing(Size(-1), "Invalid"); // This should fail based on logic
-            anyTestPassed |= AssertFailing(Size(0), "S"); // This should pass, expected failure
-            anyTestPassed |= AssertFailing(Size(int.MaxValue), "L"); // This should pass, expected failure
+            anyTestPassed |= AssertFailing(Size(0), "Invalid"); // This should fail, expected failure
+            anyTestPassed |= AssertFailing(Size(int.MaxValue), "L"); // Should pass, expected failure
 
             // If any test passed unexpectedly, throw an exception
             if (anyTestPassed) {
@@ -47,3 +47,4 @@ namespace TshirtSpace {
         }
     }
 }
+
